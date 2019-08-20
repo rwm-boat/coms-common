@@ -1,38 +1,72 @@
 import paho.mqtt.client as mqtt #import the client1
 import time
 
-def on_message(client, userdata, message):
-    print("message received " ,str(message.payload.decode("utf-8")))
-    print("message topic=",message.topic)
-    print("message qos=",message.qos)
-    print("message retain flag=",message.retain)
+
+class MQTTClient(mqtt.Client):
+
+    def __init__(client_id="" broker_address="pi-zero", on_connect = on_connect, on_message_received=on_message_received):
+        
+        # Set the client ID
+        self.client_id = client_id
+
+        # Set the Initial Callbacks
+        self.on_connect = on_connect
+        self.on_message = on_message_received
+
+        # Connect to the Broker
+        print(f"Attempting to conect to broker at {broker_address}")
+        self.connect(broker_address)
+
+        # Maintain Connection
+        self.loop_forever()
 
 
-broker_address="192.168.1.7" 
-#broker_address="iot.eclipse.org"
 
-print("creating new instance")
-client = mqtt.Client("P1") #create new instance
-# Attach a message received callback
-client.on_message = on_message
+    # The callback for when the client receives a CONNACK response from the server.
+    def on_connect(client, userdata, flags, rc, default_subs=[]):
+        print("Connected to Broker with result code "+str(rc))
 
-print("connecting to broker")
-# COnnect to the broker
-client.connect(broker_address)
-
-# Start the Loop
-client.loop_start()
+        # Subscribing in on_connect() means that if we lose the connection and
+        # reconnect then subscriptions will be renewed.
+        for topic in default_subs:
+            client.subscribe(topic)
 
 
-print("Subscribing to topic","house/bulbs/bulb1")
-client.subscribe("status/temp_senesor/celcius")
+    # The callback for when a PUBLISH message is received from the server.
+    def on_message_received(client, userdata, message):
+        print("message received " ,str(message.payload.decode("utf-8")))
+        print("message topic=",message.topic)
+        print("message qos=",message.qos)
+        print("message retain flag=",message.retain)
 
-print("Publishing message to topic","house/bulbs/bulb1")
-client.publish("status/temp_senesor/celcius","temp: 25")
+    def subscribe_to_topic(topic):
+        self.subscribe(topic)
 
-# Wait for the broker to retur the message
-time.sleep(4)
+    def publish_message(topic, message):
+        self.publish(topic, message)
+    
 
-# STop the Loop 
-client.loop_stop()
+
+
+# ==================
+# -- MAIN METHOD -- 
+# ==================
+if __name__ == '__main__':
+
+    broker_address="192.168.1.7" 
+
+    print("creating new instance")
+    client = MQTTClient("P1", broker_address) #create new instance
+
+
+    print("Subscribing to topic")
+    client.subscribe_to_topic("status/temp_senesor/celcius")
+
+    print("Publishing message")
+    client.publish_message("status/temp_senesor/celcius","temp: 25")
+
+    # Wait for the broker to retur the message
+    time.sleep(4)
+
+   
 
