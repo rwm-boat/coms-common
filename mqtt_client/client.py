@@ -25,10 +25,10 @@ client.loop_start()
 
 
 print("Subscribing to topic","house/bulbs/bulb1")
-client.subscribe("house/bulbs/bulb1")
+client.subscribe("status/temp_senesor/celcius")
 
 print("Publishing message to topic","house/bulbs/bulb1")
-client.publish("house/bulbs/bulb1","OFF")
+client.publish("status/temp_senesor/celcius","temp: 25")
 
 # Wait for the broker to retur the message
 time.sleep(4)
