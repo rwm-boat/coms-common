@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt #import the client1
 import time
+import argparse
 
 
 class MQTTClient(mqtt.Client):
@@ -57,12 +58,29 @@ class MQTTClient(mqtt.Client):
 # -- MAIN METHOD -- 
 # ==================
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-b", "--broker", help="The IP/hostname of the broker to connect to")
+    parser.add_argument("-c", "--client", help="The Client ID to use with the broker")
+    args = parser.parse_args()
+    
+    # Check the Broker IP Address
+    if args.broker:
+        broker_address = args.broker
+    else:
+        broker_address="192.168.1.7" 
+        print(f"No Broker address provided, set to {broker_address}")
 
-    broker_address="192.168.1.7" 
+    # Check the Client ID
+    if args.client:
+        client_id = args.client
+    else: 
+        client_id = "dummy_client"
+        print(f"No Client ID provided, set to {client_id}")
+  
+    print("Creating new MQTT Client:    {}")
+    client = MQTTClient(client_id, broker_address) #create new instance
 
-    print("creating new instance")
-    client = MQTTClient("P1", broker_address) #create new instance
-
+    client.loop_start()
 
     print("Subscribing to topic")
     client.subscribe_to_topic("status/temp_senesor/celcius")
@@ -72,6 +90,8 @@ if __name__ == '__main__':
 
     # Wait for the broker to retur the message
     time.sleep(4)
+
+    client.loop_stop()
 
    
 
