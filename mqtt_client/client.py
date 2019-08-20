@@ -4,25 +4,30 @@ import time
 
 class MQTTClient(mqtt.Client):
 
-    def __init__(client_id="" broker_address="pi-zero", on_connect = on_connect, on_message_received=on_message_received):
+    def __init__(self, client_id="", broker_address="pi-zero", on_connect = None, on_message_received= None):
         
-        # Set the client ID
-        self.client_id = client_id
+        super().__init__(client_id)
 
         # Set the Initial Callbacks
-        self.on_connect = on_connect
-        self.on_message = on_message_received
+        if on_connect: 
+            self.on_connect = on_connect
+        else: 
+            self.on_connect = self._on_connect
+        if on_message_received:     
+            self.on_message = on_message_received
+        else: 
+            self.on_message= self._on_message_received
 
         # Connect to the Broker
         print(f"Attempting to conect to broker at {broker_address}")
         self.connect(broker_address)
-
+        print("Successfully Connected to Broker")
         # Maintain Connection
-        self.loop_forever()
+        #self.loop_forever()
 
 
     # The callback for when the client receives a CONNACK response from the server.
-    def on_connect(client, userdata, flags, rc, default_subs=[]):
+    def _on_connect(self, client, userdata, flags, rc, default_subs=[]):
         print("Connected to Broker with result code "+str(rc))
 
 
@@ -33,16 +38,16 @@ class MQTTClient(mqtt.Client):
 
 
     # The callback for when a PUBLISH message is received from the server.
-    def on_message_received(client, userdata, message):
+    def _on_message_received(self, client, userdata, message):
         print("message received " ,str(message.payload.decode("utf-8")))
         print("message topic=",message.topic)
         print("message qos=",message.qos)
         print("message retain flag=",message.retain)
 
-    def subscribe_to_topic(topic):
+    def subscribe_to_topic(self, topic):
         self.subscribe(topic)
 
-    def publish_message(topic, message):
+    def publish_message(self, topic, message):
         self.publish(topic, message)
     
 
