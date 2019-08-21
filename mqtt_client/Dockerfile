@@ -10,3 +10,5 @@ RUN pip3 install paho-mqtt
 
 COPY ./client.py /
 
+ENTRYPOINT [ "python3", "client.py" ]
+
