@@ -126,7 +126,7 @@ if __name__ == '__main__':
     if args.broker:
         broker_address = args.broker
     else:
-        broker_address="192.168.1.7" 
+        broker_address="192.168.1.70" 
         print(f"No Broker address provided, set to {broker_address}")
 
     # Check the Client ID
