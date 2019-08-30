@@ -35,6 +35,6 @@ if __name__ == '__main__':
     while(True):
         milli = time.time() * 1000
         client.publish_message("status/time","time: " + str(milli))
-        time.sleep(4)
+        time.sleep(1)
 
     client.loop_stop()
