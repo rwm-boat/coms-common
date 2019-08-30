@@ -1,7 +1,7 @@
 import sys
 import time
 
-from ../mqtt_client/client import MQTTClient
+from coms-common/mqtt_client/client import MQTTClient
 
 
 # ==================
