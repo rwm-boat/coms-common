@@ -140,13 +140,12 @@ if __name__ == '__main__':
     client = MQTTClient(mqtt_client_id=client_id, transport="tcp", broker_address=broker_address) 
 
     client.loop_start()
+    client.subscribe_to_topic("status/time")
 
-    client.subscribe_to_topic("status/temp_senesor/celcius")
-
-    client.publish_message("status/temp_senesor/celcius","temp: 25")
-
-    # Wait for the broker to retur the message
-    time.sleep(4)
+    while(True):
+        # Wait for the broker to retur the message
+        time.sleep(.001)
+    #client.publish_message("status/temp_senesor/celcius","temp: 25")
 
     client.loop_stop()
 
