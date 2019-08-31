@@ -89,7 +89,7 @@ class MQTTClient(mqtt.Client):
     #  for example, subscribe to sensors/# and have one callback to handle sensors/temperature 
     #  and another to handle sensors/humidity
     def add_specific_callback(self, topic_filter, callback):
-        message_callback_add(topic_filter, callback)
+        self.message_callback_add(topic_filter, callback)
 
     
     # Remove a topic/subscription specific callback previously registered

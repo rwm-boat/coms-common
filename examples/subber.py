@@ -5,12 +5,11 @@ import argparse
 from mqtt_client.client import MQTTClient
 
 def on_time_received(client, userdata, message):
-    send_time = str(message.payload.decode("utf-8"))
+    send_time = float(message.payload.decode("utf-8"))
     recv_time = time.time() * 1000
     time_in_transit = recv_time - send_time
-    print(f"message received  {payload}")
+    print(f"Message received  {message.payload.decode('utf-8')}")
     print(f"Transit Time: {time_in_transit} Milliseconds")
-
    
 
 # ==================
@@ -38,7 +37,9 @@ if __name__ == '__main__':
   
     #create new instance
     #create new instance
-    client = MQTTClient(mqtt_client_id=client_id, transport="tcp", broker_address=broker_address, on_message_ret=on_time_received) 
+    #client = MQTTClient(mqtt_client_id=client_id, transport="tcp", broker_address=broker_address, on_message_ret=on_time_received) 
+    client = MQTTClient(mqtt_client_id=client_id, transport="tcp", broker_address=broker_address) 
+    client.add_specific_callback("/status/time", on_time_received)
 
     client.subscribe_to_topic("status/time")
     client.loop_forever()
