@@ -1,7 +1,8 @@
 import sys
 import time
+import argparse
 
-from client import MQTTClient
+from mqtt_client.client import MQTTClient
 
 
 # ==================
@@ -24,7 +25,7 @@ if __name__ == '__main__':
     if args.client:
         client_id = args.client
     else: 
-        client_id = "dummy_client"
+        client_id = "dummy_pubber"
         print(f"No Client ID provided, set to {client_id}")
   
     #create new instance

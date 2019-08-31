@@ -2,3 +2,7 @@
 /.vscode
 # Python Virtual Env
 /venv
+
+# MQTT_CLIENT package
+/mqtt_client/__pycache__
+mqtt_client.egg-info
