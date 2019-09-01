@@ -10,7 +10,11 @@ def on_time_received(client, userdata, message):
     time_in_transit = recv_time - send_time
     print(f"Message received  {message.payload.decode('utf-8')}")
     print(f"Transit Time: {time_in_transit} Milliseconds")
-   
+
+
+def on_gps_received(client, userdata, message):
+    print("RECEIVED GPS DATA")
+
 
 # ==================
 # -- MAIN METHOD -- 
@@ -39,10 +43,18 @@ if __name__ == '__main__':
     #create new instance
     #client = MQTTClient(mqtt_client_id=client_id, transport="tcp", broker_address=broker_address, on_message_ret=on_time_received) 
     client = MQTTClient(mqtt_client_id=client_id, transport="tcp", broker_address=broker_address) 
-    client.add_specific_callback("/status/time", on_time_received)
-
+    
+    # Setup Time Topic
     client.subscribe_to_topic("status/time")
+    client.add_specific_callback("/status/time", on_time_received)
+    
     client.loop_forever()
+
+    # Setup GPS Topic
+    client.subscribe_to_topic("status/gps")
+    client.add_specific_callback("/status/time", on_gps_received)
+
+
 
     while(True):
         # Wait for the broker to retur the message
