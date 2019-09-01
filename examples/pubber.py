@@ -31,11 +31,11 @@ if __name__ == '__main__':
     #create new instance
     client = MQTTClient(mqtt_client_id=client_id, transport="tcp", broker_address=broker_address) 
 
-    client.loop_start()
+    #client.loop_start()
 
     while(True):
         milli = time.time() * 1000
         client.publish_message("status/time",str(milli))
         time.sleep(.20)
 
-    client.loop_stop()
+    #client.loop_stop()
