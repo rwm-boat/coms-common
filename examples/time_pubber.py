@@ -25,7 +25,7 @@ if __name__ == '__main__':
     if args.client:
         client_id = args.client
     else: 
-        client_id = "dummy_pubber"
+        client_id = "time_pubber"
         print(f"No Client ID provided, set to {client_id}")
   
     #create new instance
@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
     while(True):
         milli = time.time() * 1000
-        client.publish_message("status/time",str(milli))
+        client.publish_message("/status/time",str(milli))
         time.sleep(.20)
 
     #client.loop_stop()

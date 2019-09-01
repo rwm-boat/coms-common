@@ -70,18 +70,12 @@ class MQTTClient(mqtt.Client):
     #  Use message_callback_add() [ add_specific_callback() ] to define a callback that will 
     #  be called for specific topic filters. on_message will serve as fallback when none matched.
     def _on_message_ret(self, client, userdata, message):
-        # payload = str(message.payload.decode("utf-8"))
-        # print(f"message received  {payload}")
-        # print(f"message topic= {message.topic}")
-        # print(f"message qos= {message.qos}")
-        # print(f"message retain flag= {message.retain}")
         payload = str(message.payload.decode("utf-8"))
-        temp = payload.split(" ")
-        send_time = float(temp[-1])
-        recv_time = time.time() * 1000
-        time_in_transit = recv_time - send_time
         print(f"message received  {payload}")
-        print(f"Transit Time: {time_in_transit} Milliseconds")
+        print(f"message topic= {message.topic}")
+        print(f"message qos= {message.qos}")
+        print(f"message retain flag= {message.retain}")
+        
 
     ###
     # This function allows you to define callbacks that handle incoming messages

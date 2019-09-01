@@ -45,15 +45,15 @@ if __name__ == '__main__':
     client = MQTTClient(mqtt_client_id=client_id, transport="tcp", broker_address=broker_address) 
     
     # Setup Time Topic
-    client.subscribe_to_topic("status/time")
+    client.subscribe_to_topic("/status/time")
     client.add_specific_callback("/status/time", on_time_received)
     
-    client.loop_forever()
 
     # Setup GPS Topic
-    client.subscribe_to_topic("status/gps")
-    client.add_specific_callback("/status/time", on_gps_received)
+    client.subscribe_to_topic("/status/gps")
+    client.add_specific_callback("/status/gps", on_gps_received)
 
+    client.loop_forever()
 
 
     while(True):
