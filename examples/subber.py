@@ -1,8 +1,7 @@
-import sys
-import time
-import argparse
+from mqtt_client.subscriber import Subscriber
 
-from mqtt_client.client import MQTTClient
+import time
+
 
 def on_time_received(client, userdata, message):
     send_time = float(message.payload.decode("utf-8"))
@@ -20,44 +19,22 @@ def on_gps_received(client, userdata, message):
 # -- MAIN METHOD -- 
 # ==================
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-b", "--broker", help="The IP/hostname of the broker to connect to")
-    parser.add_argument("-c", "--client", help="The Client ID to use with the broker")
-    args = parser.parse_args()
+
+    default_subscriptions = {
+        "/status/time": on_time_received,
+        "/status/gps": on_gps_received
+    }
+     
+    subber = Subscriber(client_id="test_subber")
+    subber.subscribe_many(default_subscriptions)
+
+    # Setup Topics
+    # subber.subscribe("/status/time", on_time_received)
+    # subber.subscribe("/status/gps", on_gps_received)
     
-    # Check the Broker IP Address
-    if args.broker:
-        broker_address = args.broker
-    else:
-        broker_address="192.168.1.70" 
-        print(f"No Broker address provided, set to {broker_address}")
-
-    # Check the Client ID
-    if args.client:
-        client_id = args.client
-    else: 
-        client_id = "dummy_subber"
-        print(f"No Client ID provided, set to {client_id}")
-  
-    #create new instance
-    #create new instance
-    #client = MQTTClient(mqtt_client_id=client_id, transport="tcp", broker_address=broker_address, on_message_ret=on_time_received) 
-    client = MQTTClient(mqtt_client_id=client_id, transport="tcp", broker_address=broker_address) 
-    
-    # Setup Time Topic
-    client.subscribe_to_topic("/status/time")
-    client.add_specific_callback("/status/time", on_time_received)
-    
-
-    # Setup GPS Topic
-    client.subscribe_to_topic("/status/gps")
-    client.add_specific_callback("/status/gps", on_gps_received)
-
-    client.loop_forever()
-
+    subber.listen()
 
     while(True):
         # Wait for the broker to retur the message
         time.sleep(.001)
-    #client.publish_message("status/temp_senesor/celcius","temp: 25")
 

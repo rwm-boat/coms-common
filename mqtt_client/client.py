@@ -76,21 +76,6 @@ class MQTTClient(mqtt.Client):
         print(f"message qos= {message.qos}")
         print(f"message retain flag= {message.retain}")
         
-
-    ###
-    # This function allows you to define callbacks that handle incoming messages
-    #  for specific subscription filters, including with wildcards. This lets you, 
-    #  for example, subscribe to sensors/# and have one callback to handle sensors/temperature 
-    #  and another to handle sensors/humidity
-    def add_specific_callback(self, topic_filter, callback):
-        self.message_callback_add(topic_filter, callback)
-
-    
-    # Remove a topic/subscription specific callback previously registered
-    #  using message_callback_add() [ add_specific_callback() ]
-    def remove_secific_callback(self, topic_filter):
-        message_callback_remove(topic_filter)
-
     
     def _on_publish_ret(self, userdata, mid):
         print(f"Message Published with mid : {str(mid)}")
@@ -103,9 +88,4 @@ class MQTTClient(mqtt.Client):
     def _on_unsubscribe_ret(self, client, userdata, mid):
         print(f"Subscribed to topic with mid : {str(mid)}")
 
-
-    def subscribe_to_topic(self, topic):
-        self.subscribe(topic)
-
-   
 
