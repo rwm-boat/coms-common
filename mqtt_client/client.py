@@ -107,9 +107,5 @@ class MQTTClient(mqtt.Client):
     def subscribe_to_topic(self, topic):
         self.subscribe(topic)
 
-    def publish_message(self, topic, message):
-        self.publish(topic, message)
-    
-
    
 
