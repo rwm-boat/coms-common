@@ -11,6 +11,6 @@ if __name__ == '__main__':
 
     while(True):
         coords  = [1, 1, 1]
-        client.publish_message("/status/gps",str(coords))
+        pubber.publish("/status/gps",str(coords))
         time.sleep(.20)
 
