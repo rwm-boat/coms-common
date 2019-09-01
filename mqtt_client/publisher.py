@@ -10,4 +10,4 @@ class Publisher():
         self.client = MQTTClient(mqtt_client_id=client_id, broker_address=broker_ip)
 
     def publish(self, topic, message):
-        client.publish(topic=topic, payload=message, reatain=True)
+        self.client.publish(topic=topic, payload=message, retain=True)
