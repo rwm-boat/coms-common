@@ -13,4 +13,4 @@ if __name__ == '__main__':
     while(True):
         milli = time.time() * 1000
         pubber.publish("/status/time",str(milli))
-        time.sleep(.20)
+        #time.sleep(.01)
