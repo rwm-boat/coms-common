@@ -5,7 +5,7 @@ class Subscriber():
     def __init__(self, client_id="default_subscriber", default_subscriptons=None):
 
         # Define Broker IP Address
-        broker_ip = "192.168.1.70"
+        broker_ip = "192.168.1.102"
 
         self.client = MQTTClient(mqtt_client_id=client_id, broker_address=broker_ip)
 
