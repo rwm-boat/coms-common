@@ -25,13 +25,11 @@ if __name__ == '__main__':
         "/status/gps": on_gps_received
     }
      
-    subber = Subscriber(client_id="test_subber")
-    subber.subscribe_many(default_subscriptions)
-
-    # Setup Topics
+    subber = Subscriber(client_id="test_subber", broker_ip="192.168.1.102", default_subscriptions)
     # subber.subscribe("/status/time", on_time_received)
     # subber.subscribe("/status/gps", on_gps_received)
-    
+    #subber.subscribe_many(default_subscriptions)
+
     subber.listen()
 
     while(True):
