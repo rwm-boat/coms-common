@@ -1,5 +1,5 @@
 from mqtt_client.subscriber import Subscriber
-
+import json
 import time
 
 
@@ -12,9 +12,12 @@ def on_time_received(client, userdata, message):
 
 
 def on_gps_received(client, userdata, message):
-    print("RECEIVED GPS DATA")
-
-
+    #print("RECEIVED GPS DATA")
+    obj = json.loads(message.payload.decode('utf-8'))
+    print("time: " + str(obj['time']))
+    print("latitude" + str(obj['latitude']))
+    print("longitude" + str(obj['longitude']))
+   
 # ==================
 # -- MAIN METHOD -- 
 # ==================
@@ -25,7 +28,8 @@ if __name__ == '__main__':
         "/status/gps": on_gps_received
     }
      
-    subber = Subscriber(client_id="test_subber", broker_ip="192.168.1.102", default_subscriptions)
+    subber = Subscriber(client_id="test_subber", broker_ip="192.168.1.170", default_subscriptions=default_subscriptions)
+    # 
     # subber.subscribe("/status/time", on_time_received)
     # subber.subscribe("/status/gps", on_gps_received)
     #subber.subscribe_many(default_subscriptions)

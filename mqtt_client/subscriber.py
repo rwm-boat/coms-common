@@ -2,11 +2,11 @@ from mqtt_client.client import MQTTClient
 
 class Subscriber():
 
-    def __init__(self, client_id="default_subscriber", broker_ip="192.168.1.102", default_subscriptons=None):        
+    def __init__(self, client_id="default_subscriber", broker_ip="192.168.1.170", default_subscriptions=None):        
 
         self.client = MQTTClient(mqtt_client_id=client_id, broker_address=broker_ip)
-        if default_subscriptons is not None:
-            self.subscribe_many(default_subscriptons)
+        if default_subscriptions is not None:
+            self.subscribe_many(default_subscriptions)
 
 
     def subscribe_many(self, subscriptions):
