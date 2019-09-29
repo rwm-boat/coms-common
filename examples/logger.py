@@ -17,6 +17,8 @@ def on_gps_received(client, userdata, message):
     print("time: " + str(obj['time']))
     print("latitude" + str(obj['latitude']))
     print("longitude" + str(obj['longitude']))
+    with open('log.txt', 'a') as outfile:
+        json.dump(obj, outfile)
    
 # ==================
 # -- MAIN METHOD -- 
@@ -28,7 +30,7 @@ if __name__ == '__main__':
         "/status/gps": on_gps_received
     }
      
-    subber = Subscriber(client_id="test_subber", broker_ip="127.0.0.1", default_subscriptions=default_subscriptions)
+    subber = Subscriber(client_id="logger_client", broker_ip="127.0.0.1", default_subscriptions=default_subscriptions)
     # 
     # subber.subscribe("/status/time", on_time_received)
     # subber.subscribe("/status/gps", on_gps_received)
@@ -39,4 +41,5 @@ if __name__ == '__main__':
     while(True):
         # Wait for the broker to retur the message
         time.sleep(.001)
+
 
