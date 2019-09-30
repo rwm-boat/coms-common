@@ -40,5 +40,4 @@ plt.show()
 with open('gps.csv', 'w') as gps:
     gps.write("latitude,longitude\n")
     for i in range(0, len(latitude)):
-        if i < len(latitude) and i < len(longitude):
-            gps.write(f"{latitude[i]},{longitude[i]}\n")
+        gps.write(f"{latitude[i]},{longitude[i]}\n")
