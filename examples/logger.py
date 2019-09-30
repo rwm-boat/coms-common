@@ -6,12 +6,12 @@ import time
 def on_gps_received(client, userdata, message):
     #print("RECEIVED GPS DATA")
     obj = json.loads(message.payload.decode('utf-8'))
-    print("time: " + str(obj['time']))
-    print("latitude" + str(obj['latitude']))
-    print("longitude" + str(obj['longitude']))
+    #print("time: " + str(obj['time']))
+    #print("latitude" + str(obj['latitude']))
+    #print("longitude" + str(obj['longitude']))
     with open('log.txt', 'a') as outfile:
         json.dump(obj, outfile)
-        outflile.write('\n')
+        outfile.write('\n')
 
    
 # ==================
