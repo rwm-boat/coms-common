@@ -3,14 +3,6 @@ import json
 import time
 
 
-def on_time_received(client, userdata, message):
-    send_time = float(message.payload.decode("utf-8"))
-    recv_time = time.time() * 1000
-    time_in_transit = recv_time - send_time
-    print(f"Message received  {message.payload.decode('utf-8')}")
-    print(f"Transit Time: {time_in_transit} Milliseconds")
-
-
 def on_gps_received(client, userdata, message):
     #print("RECEIVED GPS DATA")
     obj = json.loads(message.payload.decode('utf-8'))
@@ -19,6 +11,8 @@ def on_gps_received(client, userdata, message):
     print("longitude" + str(obj['longitude']))
     with open('log.txt', 'a') as outfile:
         json.dump(obj, outfile)
+        outflile.write('\n')
+
    
 # ==================
 # -- MAIN METHOD -- 
@@ -26,7 +20,6 @@ def on_gps_received(client, userdata, message):
 if __name__ == '__main__':
 
     default_subscriptions = {
-        "/status/time": on_time_received,
         "/status/gps": on_gps_received
     }
      
