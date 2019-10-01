@@ -4,40 +4,82 @@ import math
 
 
 
+def load_old_log():
+    time = []
+    latitude = []
+    longitude = []
 
-time = []
-latitude = []
-longitude = []
+    with open('log.txt', 'r') as log_file:
+        error_filter = 20
+        for line in log_file.readlines():
+            obj = json.loads(line)
+            time.append(obj['time'])
+            if abs(obj['latitude']) > error_filter:
+                latitude.append(obj['latitude'])
+            if abs(obj['longitude']) > error_filter:
+                longitude.append(obj['longitude'])
+    return time, latitude, longitude
 
-with open('log.txt', 'r') as log_file:
-    error_filter = 20
-    for line in log_file.readlines():
-        obj = json.loads(line)
-        time.append(obj['time'])
-        if abs(obj['latitude']) > error_filter:
-            latitude.append(obj['latitude'])
-        if abs(obj['longitude']) > error_filter:
-            longitude.append(obj['longitude'])
+def plot_lat_long(latitude, longitude):
+    plt.subplot(1, 2, 1)
+    plt.plot(latitude, label='Latitude')
+    plt.title('Latitude')
+    plt.xlabel('Time')
+    plt.ylabel('Coords')
+    plt.legend()
+    plt.grid()
+
+    plt.subplot(1, 2, 2)
+    plt.plot(longitude, label='Longitude')
+    plt.title('Longiude')
+    plt.xlabel('Time')
+    plt.ylabel('Coords')
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+def print_lat_long_csv(latitude, longitude):
+    with open('gps.csv', 'w') as gps:
+        gps.write("latitude,longitude\n")
+        for i in range(0, len(latitude)):
+            gps.write(f"{latitude[i]},{longitude[i]}\n")
 
 
-plt.subplot(1, 2, 1)
-plt.plot(latitude, label='Latitude')
-plt.title('Latitude')
-plt.xlabel('Time')
-plt.ylabel('Coords')
-plt.legend()
-plt.grid()
+def load_adc_log():
+    value = []
+    voltage = []
 
-plt.subplot(1, 2, 2)
-plt.plot(longitude, label='Longitude')
-plt.title('Longiude')
-plt.xlabel('Time')
-plt.ylabel('Coords')
-plt.legend()
-plt.grid()
-plt.show()
+    with open('adc_log.txt', 'r') as log_file:
+        for line in log_file.readlines():
+            obj = json.loads(line)
+            value.append(obj['value'])
+            voltage.append(obj['voltage'])
+    return value, voltage
 
-with open('gps.csv', 'w') as gps:
-    gps.write("latitude,longitude\n")
-    for i in range(0, len(latitude)):
-        gps.write(f"{latitude[i]},{longitude[i]}\n")
+
+def plot_adc_log(value, voltage):
+    plt.subplot(1, 2, 1)
+    plt.plot(value, label='Value')
+    plt.title('Value')
+    plt.xlabel('Time')
+    plt.ylabel('???')
+    plt.legend()
+    plt.grid()
+
+    plt.subplot(1, 2, 2)
+    plt.plot(voltage, label='Voltage')
+    plt.title('Voltage')
+    plt.xlabel('Time')
+    plt.ylabel('?????')
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+value, voltage = load_adc_log()
+plot_adc_log(value, voltage)
+
+
+# load_old_log()
+# plot_lat_long()
+# print_lat_long_csv()
+
