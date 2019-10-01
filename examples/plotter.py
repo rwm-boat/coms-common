@@ -56,6 +56,33 @@ def load_adc_log():
             voltage.append(obj['voltage'])
     return value, voltage
 
+def load_compass_log():
+    temp = []
+    compass = []
+
+    with open('compas_log.txt', 'r') as log_file:
+        for line in log_file.readlines():
+            obj = json.loads(line)
+            temp.append(obj['temp'])
+            compass.append(obj['compass'])
+    return temp, compass
+
+def load_gps_log():
+    time = []
+    latitude = []
+    longitude = []
+
+    with open('gps_log.txt', 'r') as log_file:
+        error_filter = 20
+        for line in log_file.readlines():
+            obj = json.loads(line)
+            time.append(obj['time'])
+            if abs(int(obj['latitude'])) > error_filter:
+                latitude.append(obj['latitude'])
+            if abs(obj['longitude']) > error_filter:
+                longitude.append(obj['longitude'])
+    return time, latitude, longitude
+
 
 def plot_adc_log(value, voltage):
     plt.subplot(1, 2, 1)
@@ -75,8 +102,33 @@ def plot_adc_log(value, voltage):
     plt.grid()
     plt.show()
 
-value, voltage = load_adc_log()
-plot_adc_log(value, voltage)
+def plot_compass_log(temp, compass):
+    plt.subplot(1, 2, 1)
+    plt.plot(temp, label='Temp')
+    plt.title('Temp')
+    plt.xlabel('Time')
+    plt.ylabel('???')
+    plt.legend()
+    plt.grid()
+
+    plt.subplot(1, 2, 2)
+    plt.plot(compass, label='Compass')
+    plt.title('Compass')
+    plt.xlabel('Time')
+    plt.ylabel('?????')
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+# PLOT ADC 
+# value, voltage = load_adc_log()
+# plot_adc_log(value, voltage)
+
+# PLOT NAV
+temp, compass = load_compass_log()
+time, latitude, longitude = load_gps_log()
+plot_compass_log(temp,compass)
+plot_lat_long(latitude,longitude)
 
 
 # load_old_log()
