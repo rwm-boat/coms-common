@@ -1,4 +1,3 @@
-{"time": "n/a", "latitude": "n/a", "longitude": "n/a", "speed": "n/a", "course": "n/a"}
 {"time": "2019-10-01T19:20:02.000Z", "latitude": 5.3, "longitude": 4.3, "speed": "n/a", "course": "n/a"}
 {"time": "2019-10-01T19:20:04.000Z", "latitude": 5.1, "longitude": 4.3, "speed": 0.061, "course": 0.0}
 {"time": "2019-10-01T19:20:06.000Z", "latitude": 4.9, "longitude": 4.1, "speed": 0.135, "course": 0.0}
