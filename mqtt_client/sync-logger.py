@@ -4,6 +4,7 @@ import time
 from mqtt_client.subscriber import Subscriber
 from threading import Thread
 import json
+from datetime import datetime
 
 # global variables for logging
 mag_compass_reading = 0
@@ -19,6 +20,19 @@ compartment_temp = 0
 gps_distance = 0
 jet1_current = 0 #starboard
 jet2_current = 0 #port
+
+# Base Name for Log files
+_LOG_BASE = "log"
+
+def on_log_received(client, userdata, message):
+    global _LOG_BASE
+    log_title = message.payload.decode("utf-8")
+    time = datetime.today()
+    log_time = (
+        f"{time.year}-{time.month}-{time.day}-{time.hour}:{time.minute}:{time.second}"
+    )
+    _LOG_BASE = log_title + "_" + log_time
+    print(_LOG_BASE)
 
 def on_temp_received(client, userdata, message):
     global jet1_temp
@@ -101,6 +115,9 @@ if __name__ == '__main__':
                 'jet2_temp' : jet2_temp,
                 'compartment_temp' : compartment_temp,
             }
+            with open(f"../logs/{_LOG_BASE}_adc.txt", "a") as outfile:
+                json.dump(obj, outfile)
+                outfile.write("\n")
             time.sleep(0.1)
             print(message)
 
