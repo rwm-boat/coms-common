@@ -1,5 +1,0 @@
-{"jet1_temp": "21.0", "jet2_temp": "22.5", "compartment_temp": "24.9375"}
-{"jet1_temp": "20.9375", "jet2_temp": "22.3125", "compartment_temp": "24.8125"}
-{"jet1_temp": "20.75", "jet2_temp": "22.25", "compartment_temp": "24.8125"}
-{"jet1_temp": "20.6875", "jet2_temp": "22.1875", "compartment_temp": "24.75"}
-{"jet1_temp": "20.6875", "jet2_temp": "22.125", "compartment_temp": "24.6875"}

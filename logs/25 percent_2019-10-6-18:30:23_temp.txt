@@ -1,8 +1,0 @@
-{"jet1_temp": "17.875", "jet2_temp": "18.375", "compartment_temp": "18.1875"}
-{"jet1_temp": "17.875", "jet2_temp": "18.4375", "compartment_temp": "18.1875"}
-{"jet1_temp": "18.0625", "jet2_temp": "18.5", "compartment_temp": "18.25"}
-{"jet1_temp": "18.1875", "jet2_temp": "18.5", "compartment_temp": "18.3125"}
-{"jet1_temp": "18.25", "jet2_temp": "18.625", "compartment_temp": "18.375"}
-{"jet1_temp": "18.4375", "jet2_temp": "18.625", "compartment_temp": "18.5"}
-{"jet1_temp": "18.625", "jet2_temp": "18.9375", "compartment_temp": "18.5"}
-{"jet1_temp": "18.6875", "jet2_temp": "19.125", "compartment_temp": "18.5625"}
