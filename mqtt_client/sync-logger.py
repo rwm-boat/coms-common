@@ -117,7 +117,7 @@ if __name__ == '__main__':
                 'compartment_temp' : compartment_temp,
             }
             with open(f"../logs/{_LOG_BASE}_adc.txt", "a") as outfile:
-                json.dump(obj, outfile)
+                json.dump(message, outfile)
                 outfile.write("\n")
             time.sleep(0.1)
             print(message)
