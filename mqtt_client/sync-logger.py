@@ -40,7 +40,7 @@ def on_internal_compass_received(client, userdata, message):
     obj = json.loads(message.payload.decode('utf-8'))
     int_compass_reading = obj['heading']
 
-ddef on_gps_received(client, userdata, message):
+def on_gps_received(client, userdata, message):
     # create global variables for UI
     global time_reading
     global lat_reading
@@ -77,7 +77,7 @@ if __name__ == '__main__':
             "/status/compass": on_compass_received,
             "/status/gps" : on_gps_received,
             "/status/adc" : on_adc_received,
-            "/status/internal_compass" : on_internal_compass_received
+            "/status/internal_compass" : on_internal_compass_received,
             "/status/temp" : on_temp_received
         }
         subber = Subscriber(client_id="telemetry_live", broker_ip="192.168.1.170", default_subscriptions=default_subscriptions)
@@ -101,7 +101,7 @@ if __name__ == '__main__':
                 'jet2_temp' : jet2_temp,
                 'compartment_temp' : compartment_temp,
             }
-            sleep(0.1)
+            time.sleep(0.1)
             print(message)
 
        
