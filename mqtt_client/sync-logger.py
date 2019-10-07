@@ -92,7 +92,8 @@ if __name__ == '__main__':
             "/status/gps" : on_gps_received,
             "/status/adc" : on_adc_received,
             "/status/internal_compass" : on_internal_compass_received,
-            "/status/temp" : on_temp_received
+            "/status/temp" : on_temp_received,
+            "/command/logging" : on_log_received
         }
         subber = Subscriber(client_id="telemetry_live", broker_ip="192.168.1.170", default_subscriptions=default_subscriptions)
         thread = Thread(target=subber.listen)
