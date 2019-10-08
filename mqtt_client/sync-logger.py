@@ -116,7 +116,7 @@ if __name__ == '__main__':
                 'jet2_temp' : jet2_temp,
                 'compartment_temp' : compartment_temp,
             }
-            with open(f"../logs/{_LOG_BASE}_adc.txt", "a") as outfile:
+            with open(f"~/logs/{_LOG_BASE}_adc.txt", "a") as outfile:
                 json.dump(message, outfile)
                 outfile.write("\n")
             time.sleep(0.1)
