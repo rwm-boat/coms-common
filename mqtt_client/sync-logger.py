@@ -36,7 +36,7 @@ def on_log_received(client, userdata, message):
         f"{time.year}-{time.month}-{time.day}-{time.hour}:{time.minute}:{time.second}"
     )
     _LOG_BASE = log_title + "_" + log_time
-    if(os.path.exists(f"../logs/{_LOG_BASE}_adc.txt"):
+    if(os.path.exists("../logs/{_LOG_BASE}_adc.txt"):
         message = {
 			'exists' : True
 	    }
