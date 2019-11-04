@@ -2,6 +2,7 @@ import sys,os
 import curses
 import time
 from mqtt_client.subscriber import Subscriber
+from mqtt_client.publisher import Publisher
 from threading import Thread
 import json
 from datetime import datetime
@@ -24,6 +25,8 @@ jet2_current = 0 #port
 # Base Name for Log files
 _LOG_BASE = "log"
 
+pubber = Publisher(client_id="logger-pubber")
+
 def on_log_received(client, userdata, message):
     global _LOG_BASE
     log_title = message.payload.decode("utf-8")
@@ -32,7 +35,13 @@ def on_log_received(client, userdata, message):
         f"{time.year}-{time.month}-{time.day}-{time.hour}:{time.minute}:{time.second}"
     )
     _LOG_BASE = log_title + "_" + log_time
-    print(_LOG_BASE)
+    if(os.path.exists(f"../logs/{_LOG_BASE}_adc.txt"):
+        message = {
+			'exists' : True
+	    }
+
+        app_json = json.dumps(message)
+        pubber.publish("/status/log_exists",app_json)
 
 def on_temp_received(client, userdata, message):
     global jet1_temp
