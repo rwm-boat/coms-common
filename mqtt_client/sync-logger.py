@@ -40,7 +40,7 @@ def on_log_received(client, userdata, message):
         message = {
 			'exists' : True
 	    }
-
+        print(message)
         app_json = json.dumps(message)
         pubber.publish("/status/log_exists",app_json)
 
