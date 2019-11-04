@@ -29,6 +29,7 @@ _LOG_BASE = "log"
 pubber = Publisher(client_id="logger-pubber")
 
 def file_exists():
+    print("here")
     if(os.path.exists("../logs/{_LOG_BASE}_adc.txt")):
         message = {
 			'exists' : True
