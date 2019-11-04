@@ -132,7 +132,8 @@ if __name__ == '__main__':
 
             if(os.path.exists("../logs/{_LOG_BASE}_adc.txt")):
                 exists_message = {
-			    'exists' : True
+                    
+			        'exists' : True
                 }
             print(exists_message)
             app_json = json.dumps(exists_message)
