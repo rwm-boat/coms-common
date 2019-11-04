@@ -131,11 +131,11 @@ if __name__ == '__main__':
             time.sleep(0.1)
 
             if(os.path.exists("../logs/{_LOG_BASE}_adc.txt")):
-                message = {
+                exists_message = {
 			    'exists' : True
                 }
-            print(message)
-            app_json = json.dumps(message)
+            print(exists_message)
+            app_json = json.dumps(exists_message)
             pubber.publish("/status/log_exists",app_json)
 
     except KeyboardInterrupt:
