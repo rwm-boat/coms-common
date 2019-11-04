@@ -23,6 +23,9 @@ jet1_current = 0 #starboard
 jet2_current = 0 #port
 pack_voltage = 0
 
+prev_name = None
+cur_name = None
+
 # Base Name for Log files
 _LOG_BASE = "log"
 
@@ -91,6 +94,9 @@ def on_adc_received(client, userdata, message):
 # -- MAIN METHOD -- 
 # ==================
 if __name__ == '__main__':
+
+    global prev_name
+    global cur_name
 
     try:
         default_subscriptions = {
