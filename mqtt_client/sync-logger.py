@@ -28,6 +28,15 @@ _LOG_BASE = "log"
 
 pubber = Publisher(client_id="logger-pubber")
 
+def file_exists():
+    if(os.path.exists("../logs/{_LOG_BASE}_adc.txt")):
+        message = {
+			'exists' : True
+	    }
+        print(message)
+        app_json = json.dumps(message)
+        pubber.publish("/status/log_exists",app_json)
+
 def on_log_received(client, userdata, message):
     global _LOG_BASE
     log_title = message.payload.decode("utf-8")
@@ -37,14 +46,7 @@ def on_log_received(client, userdata, message):
     )
     _LOG_BASE = log_title + "_" + log_time
     print("received")
-    if(os.path.exists("../logs/{_LOG_BASE}_adc.txt")):
-        message = {
-			'exists' : True
-	    }
-        print(message)
-        app_json = json.dumps(message)
-        pubber.publish("/status/log_exists",app_json)
-
+    
 def on_temp_received(client, userdata, message):
     global jet1_temp
     global jet2_temp
@@ -134,6 +136,7 @@ if __name__ == '__main__':
             with open(f"../logs/{_LOG_BASE}.txt", "a") as outfile:
                 json.dump(message, outfile)
                 outfile.write("\n")
+                file_exists()
             time.sleep(0.1)
 
 
