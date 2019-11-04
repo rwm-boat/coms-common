@@ -127,17 +127,21 @@ if __name__ == '__main__':
             with open(f"../logs/{_LOG_BASE}.txt", "a") as outfile:
                 json.dump(message, outfile)
                 outfile.write("\n")
-            
+                    
             time.sleep(0.1)
 
-            if(os.path.exists("../logs/{_LOG_BASE}_adc.txt")):
-                exists_message = {
-                    
-			        'exists' : True
-                }
-            print(exists_message)
-            app_json = json.dumps(exists_message)
-            pubber.publish("/status/log_exists",app_json)
+            cur_name = _LOG_BASE
+
+            name_message = {
+            
+                'name' : _LOG_BASE
+
+            }
+            if(cur_name is not prev_name):
+                app_json = json.dumps(name_message)
+                pubber.publish("/status/log_name",app_json)
+
+            prev_name = cur_name
 
     except KeyboardInterrupt:
         
