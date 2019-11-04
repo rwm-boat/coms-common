@@ -28,10 +28,6 @@ _LOG_BASE = "log"
 
 pubber = Publisher(client_id="logger-pubber")
 
-def file_exists():
-
-    
-
 def on_log_received(client, userdata, message):
     global _LOG_BASE
     log_title = message.payload.decode("utf-8")
