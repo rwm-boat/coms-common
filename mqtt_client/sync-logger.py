@@ -144,6 +144,7 @@ if __name__ == '__main__':
             if(cur_name is not prev_name):
                 app_json = json.dumps(name_message)
                 pubber.publish("/status/log_name",app_json)
+                print(name_message)
 
             prev_name = cur_name
 
