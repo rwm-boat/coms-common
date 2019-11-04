@@ -134,7 +134,7 @@ if __name__ == '__main__':
                 json.dump(message, outfile)
                 outfile.write("\n")
             time.sleep(0.1)
-            print(message)
+
 
        
         
