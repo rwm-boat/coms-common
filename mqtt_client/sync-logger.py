@@ -29,14 +29,8 @@ _LOG_BASE = "log"
 pubber = Publisher(client_id="logger-pubber")
 
 def file_exists():
-    print("here")
-    if(os.path.exists("../logs/{_LOG_BASE}_adc.txt")):
-        message = {
-			'exists' : True
-	    }
-        print(message)
-        app_json = json.dumps(message)
-        pubber.publish("/status/log_exists",app_json)
+
+    
 
 def on_log_received(client, userdata, message):
     global _LOG_BASE
@@ -137,12 +131,17 @@ if __name__ == '__main__':
             with open(f"../logs/{_LOG_BASE}.txt", "a") as outfile:
                 json.dump(message, outfile)
                 outfile.write("\n")
-                file_exists()
+            
             time.sleep(0.1)
 
+            if(os.path.exists("../logs/{_LOG_BASE}_adc.txt")):
+                message = {
+			    'exists' : True
+                }
+            print(message)
+            app_json = json.dumps(message)
+            pubber.publish("/status/log_exists",app_json)
 
-       
-        
     except KeyboardInterrupt:
         
         print("-End Logger-")
