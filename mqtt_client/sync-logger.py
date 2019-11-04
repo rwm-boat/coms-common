@@ -95,8 +95,6 @@ def on_adc_received(client, userdata, message):
 # ==================
 if __name__ == '__main__':
 
-    global prev_name
-    global cur_name
 
     try:
         default_subscriptions = {
