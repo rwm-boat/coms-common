@@ -21,6 +21,7 @@ compartment_temp = 0
 gps_distance = 0
 jet1_current = 0 #starboard
 jet2_current = 0 #port
+pack_voltage = 0
 
 # Base Name for Log files
 _LOG_BASE = "log"
@@ -85,10 +86,12 @@ def on_gps_received(client, userdata, message):
 def on_adc_received(client, userdata, message):
     global jet1_current
     global jet2_current
+    global pack_voltage
 
     obj = json.loads(message.payload.decode('utf-8'))
     jet1_current = obj["jet1_amps"]
     jet2_current = obj["jet2_amps"]
+    pack_voltage = obj["pack_voltage"]
 
 # ==================
 # -- MAIN METHOD -- 
@@ -103,6 +106,7 @@ if __name__ == '__main__':
             "/status/internal_compass" : on_internal_compass_received,
             "/status/temp" : on_temp_received,
             "/command/logging" : on_log_received
+            
         }
         subber = Subscriber(client_id="telemetry_live", broker_ip="192.168.1.170", default_subscriptions=default_subscriptions)
         thread = Thread(target=subber.listen)
@@ -124,8 +128,9 @@ if __name__ == '__main__':
                 'jet1_temp' : jet1_temp,
                 'jet2_temp' : jet2_temp,
                 'compartment_temp' : compartment_temp,
+                'pack_voltage' : pack_voltage
             }
-            with open(f"../logs/{_LOG_BASE}_adc.txt", "a") as outfile:
+            with open(f"../logs/{_LOG_BASE}.txt", "a") as outfile:
                 json.dump(message, outfile)
                 outfile.write("\n")
             time.sleep(0.1)
