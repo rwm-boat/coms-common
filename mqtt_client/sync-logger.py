@@ -45,7 +45,7 @@ def on_log_received(client, userdata, message):
     exists = True
     
     exists_message = {
-            
+
         'exists' : exists
     }
     app_json = json.dumps(exists_message)
