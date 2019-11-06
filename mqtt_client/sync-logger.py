@@ -148,7 +148,8 @@ if __name__ == '__main__':
                 'compartment_temp' : compartment_temp,
                 'pack_voltage' : pack_voltage
             }
-            if logging_stopped:
+            print(logging_stopped)
+            if logging_stopped == "True":
                 
                 print("not logging")
 
