@@ -23,6 +23,7 @@ jet1_current = 0 #starboard
 jet2_current = 0 #port
 pack_voltage = 0
 
+logging_enabled=True
 prev_name = None
 cur_name = None
 
@@ -51,6 +52,12 @@ def on_log_received(client, userdata, message):
     pubber.publish("/status/log_exists",app_json)
     print(exists_message)
     exists = False
+
+def on_stop_log(client, userdata, message):
+    global logging_enabled
+    logging_enabled = message.payload.decode('utf-8')
+    print(logging_enabled)
+
     
 def on_temp_received(client, userdata, message):
     global jet1_temp
@@ -115,6 +122,7 @@ if __name__ == '__main__':
             "/status/internal_compass" : on_internal_compass_received,
             "/status/temp" : on_temp_received,
             "/command/logging" : on_log_received
+            "/command/stop_logging" : on_stop_log
             
         }
         subber = Subscriber(client_id="telemetry_live", broker_ip="192.168.1.170", default_subscriptions=default_subscriptions)
@@ -139,6 +147,7 @@ if __name__ == '__main__':
                 'compartment_temp' : compartment_temp,
                 'pack_voltage' : pack_voltage
             }
+
             with open(f"../logs/{_LOG_BASE}.txt", "a") as outfile:
                 json.dump(message, outfile)
                 outfile.write("\n")
