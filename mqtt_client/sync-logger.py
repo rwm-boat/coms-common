@@ -121,7 +121,7 @@ if __name__ == '__main__':
             "/status/adc" : on_adc_received,
             "/status/internal_compass" : on_internal_compass_received,
             "/status/temp" : on_temp_received,
-            "/command/logging" : on_log_received
+            "/command/logging" : on_log_received,
             "/command/stop_logging" : on_stop_log
             
         }
