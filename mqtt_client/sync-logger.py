@@ -149,13 +149,15 @@ if __name__ == '__main__':
                 'pack_voltage' : pack_voltage
             }
             if logging_stopped:
-                pass
+                
                 print("not logging")
+
             else: 
+                print("logging")
                 with open(f"../logs/{_LOG_BASE}.txt", "a") as outfile:
                     json.dump(message, outfile)
                     outfile.write("\n")
-                    print("logging")
+                    
                     
             time.sleep(0.1)
 
