@@ -23,7 +23,7 @@ jet1_current = 0 #starboard
 jet2_current = 0 #port
 pack_voltage = 0
 
-logging_enabled=True
+logging_stopped=False
 prev_name = None
 cur_name = None
 
@@ -54,9 +54,10 @@ def on_log_received(client, userdata, message):
     exists = False
 
 def on_stop_log(client, userdata, message):
-    global logging_enabled
-    logging_enabled = message.payload.decode('utf-8')
-    print(logging_enabled)
+    global logging_stopped
+    logging_stopped = message.payload.decode('utf-8')
+    print("Logging Stopped:" + logging_stopped)
+
 
     
 def on_temp_received(client, userdata, message):
