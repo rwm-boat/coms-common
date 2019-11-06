@@ -148,10 +148,14 @@ if __name__ == '__main__':
                 'compartment_temp' : compartment_temp,
                 'pack_voltage' : pack_voltage
             }
-
-            with open(f"../logs/{_LOG_BASE}.txt", "a") as outfile:
-                json.dump(message, outfile)
-                outfile.write("\n")
+            if logging_stopped:
+                pass
+                print("not logging")
+            else: 
+                with open(f"../logs/{_LOG_BASE}.txt", "a") as outfile:
+                    json.dump(message, outfile)
+                    outfile.write("\n")
+                    print("logging")
                     
             time.sleep(0.1)
 
