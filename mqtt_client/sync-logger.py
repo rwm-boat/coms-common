@@ -30,9 +30,10 @@ cur_name = None
 _LOG_BASE = "log"
 
 pubber = Publisher(client_id="logger-pubber")
-
+exists = False
 def on_log_received(client, userdata, message):
     global _LOG_BASE
+    global exists
     log_title = message.payload.decode("utf-8")
     time = datetime.today()
     log_time = (
@@ -40,6 +41,15 @@ def on_log_received(client, userdata, message):
     )
     _LOG_BASE = log_title + "_" + log_time
     print("received")
+    exists = True
+    
+    exists_message = {
+            
+        'exists' : exists
+    }
+    app_json = json.dumps(exists_message)
+    pubber.publish("/status/log_exists",app_json)
+    print(exists_message)
     
 def on_temp_received(client, userdata, message):
     global jet1_temp
@@ -109,7 +119,7 @@ if __name__ == '__main__':
         subber = Subscriber(client_id="telemetry_live", broker_ip="192.168.1.170", default_subscriptions=default_subscriptions)
         thread = Thread(target=subber.listen)
         thread.start()
-        print("here")
+        
 
         while True:
             message = {
@@ -134,19 +144,19 @@ if __name__ == '__main__':
                     
             time.sleep(0.1)
 
-            cur_name = _LOG_BASE
+            # cur_name = _LOG_BASE
 
-            name_message = {
+            # name_message = {
             
-                'name' : _LOG_BASE
+            #     'name' : _LOG_BASE
 
-            }
-            if(cur_name is not prev_name):
-                app_json = json.dumps(name_message)
-                pubber.publish("/status/log_name",app_json)
-                print(name_message)
+            # }
+            # if(cur_name is not prev_name):
+            #     app_json = json.dumps(name_message)
+            #     pubber.publish("/status/log_name",app_json)
+            #     print(name_message)
 
-            prev_name = cur_name
+            # prev_name = cur_name
 
     except KeyboardInterrupt:
         
