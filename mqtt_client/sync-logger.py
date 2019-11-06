@@ -50,6 +50,7 @@ def on_log_received(client, userdata, message):
     app_json = json.dumps(exists_message)
     pubber.publish("/status/log_exists",app_json)
     print(exists_message)
+    exists = False
     
 def on_temp_received(client, userdata, message):
     global jet1_temp
