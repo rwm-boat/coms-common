@@ -22,6 +22,9 @@ gps_distance = 0
 jet1_current = 0 #starboard
 jet2_current = 0 #port
 pack_voltage = 0
+vector = 0
+magnitude = 0
+
 
 logging_stopped=False
 prev_name = None
@@ -57,8 +60,6 @@ def on_stop_log(client, userdata, message):
     global logging_stopped
     logging_stopped = message.payload.decode('utf-8')
     print("Logging Stopped:" + logging_stopped)
-
-
     
 def on_temp_received(client, userdata, message):
     global jet1_temp
@@ -109,6 +110,16 @@ def on_adc_received(client, userdata, message):
     jet2_current = obj["jet2_amps"]
     pack_voltage = obj["pack_voltage"]
 
+def on_vector_received(client, userdata, message):
+    global vector
+    global magnitude
+
+    obj = json.loads(message.payload.decode('utf-8'))
+    vector = obj["heading"]
+    magnitude = obj["magnitude"]
+
+
+
 # ==================
 # -- MAIN METHOD -- 
 # ==================
@@ -123,8 +134,8 @@ if __name__ == '__main__':
             "/status/internal_compass" : on_internal_compass_received,
             "/status/temp" : on_temp_received,
             "/command/logging" : on_log_received,
-            "/command/stop_logging" : on_stop_log
-            
+            "/command/stop_logging" : on_stop_log,
+            "/status/vector" : on_vector_received
         }
         subber = Subscriber(client_id="telemetry_live", broker_ip="192.168.1.170", default_subscriptions=default_subscriptions)
         thread = Thread(target=subber.listen)
@@ -146,7 +157,9 @@ if __name__ == '__main__':
                 'jet1_temp' : jet1_temp,
                 'jet2_temp' : jet2_temp,
                 'compartment_temp' : compartment_temp,
-                'pack_voltage' : pack_voltage
+                'pack_voltage' : pack_voltage,
+                'vector' : vector,
+                'magnitude' : magnitude
             }
             
             if logging_stopped == "True":
