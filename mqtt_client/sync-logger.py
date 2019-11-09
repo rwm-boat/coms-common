@@ -24,6 +24,7 @@ jet2_current = 0 #port
 pack_voltage = 0
 vector = 0
 magnitude = 0
+gyro_z = 0
 
 
 logging_stopped=False
@@ -73,8 +74,11 @@ def on_temp_received(client, userdata, message):
 
 def on_compass_received(client, userdata, message):
     global mag_compass_reading
+    global gyro_z
+
     obj = json.loads(message.payload.decode('utf-8'))
     mag_compass_reading = obj['compass']
+    gyro_z = obj['gyro_z']
 
 def on_internal_compass_received(client, userdata, message):
     global int_compass_reading
@@ -159,7 +163,9 @@ if __name__ == '__main__':
                 'compartment_temp' : compartment_temp,
                 'pack_voltage' : pack_voltage,
                 'vector' : vector,
-                'magnitude' : magnitude
+                'magnitude' : magnitude,
+                'gyro_z' : gyro_z
+                
             }
             
             if logging_stopped == "True":
