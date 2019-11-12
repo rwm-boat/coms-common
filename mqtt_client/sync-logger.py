@@ -25,7 +25,7 @@ pack_voltage = 0
 vector = 0
 magnitude = 0
 gyro_z = 0
-compass_lp = 0
+kalman_lp = 0
 kalman = 0
 
 
@@ -77,13 +77,13 @@ def on_temp_received(client, userdata, message):
 def on_compass_received(client, userdata, message):
     global mag_compass_reading
     global gyro_z
-    global compass_lp
+    global kalman_lp
     global kalman
 
     obj = json.loads(message.payload.decode('utf-8'))
     mag_compass_reading = obj['compass']
     gyro_z = obj['gyro_z']
-    compass_lp = obj['compass_lp']
+    kalman_lp = obj['kalman_lp']
     kalman = obj['kalman']
 
 def on_internal_compass_received(client, userdata, message):
@@ -172,7 +172,7 @@ if __name__ == '__main__':
                 'vector' : vector,
                 'magnitude' : magnitude,
                 'gyro_z' : gyro_z,
-                'compass_lp': compass_lp,
+                'kalman_lp': kalman_lp,
                 'kalman': kalman
             }
             
