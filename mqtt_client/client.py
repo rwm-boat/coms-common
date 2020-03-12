@@ -1,9 +1,5 @@
 import paho.mqtt.client as mqtt 
 
-import time
-import argparse
-
-
 class MQTTClient(mqtt.Client):
 
     def __init__(self, mqtt_client_id="", transport="tcp", broker_address="pi-zero", on_connect_ret=None, on_disconnect_ret=None, on_message_ret=None, on_publish_ret=None, on_subscribe_ret=None, on_unsubscribe_ret=None):
@@ -60,9 +56,11 @@ class MQTTClient(mqtt.Client):
     def _on_connect_ret(self, client, userdata, flags, rc):
         print(f"Connected to Broker with result code : {str(rc)}")
 
+
     # Called when the client disconnects from the broker.
     def _on_disconnect_ret(self, client, userdata, rc):
         print(f"Disconnected from Server with result code : {str(rc)}")
+
 
     ## 
     # Called when a message has been received on a topic that the client subscribes to 

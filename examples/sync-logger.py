@@ -28,7 +28,6 @@ gyro_z = 0
 kalman_lp = 0
 kalman = 0
 
-
 logging_stopped=False
 prev_name = None
 cur_name = None
@@ -38,9 +37,11 @@ _LOG_BASE = "log"
 
 pubber = Publisher(client_id="logger-pubber")
 exists = False
+
 def on_log_received(client, userdata, message):
     global _LOG_BASE
     global exists
+
     log_title = message.payload.decode("utf-8")
     time = datetime.today()
     log_time = (
@@ -51,17 +52,19 @@ def on_log_received(client, userdata, message):
     exists = True
     
     exists_message = {
-
         'exists' : exists
     }
     app_json = json.dumps(exists_message)
-    pubber.publish("/status/log_exists",app_json)
+
+    pubber.publish("/status/log_exists", app_json)
     print(exists_message)
     exists = False
 
 def on_stop_log(client, userdata, message):
     global logging_stopped
+
     logging_stopped = message.payload.decode('utf-8')
+
     print("Logging Stopped:" + logging_stopped)
     
 def on_temp_received(client, userdata, message):
@@ -70,6 +73,7 @@ def on_temp_received(client, userdata, message):
     global compartment_temp
 
     obj = json.loads(message.payload.decode('utf-8'))
+
     jet1_temp = obj["jet1_temp"]
     jet2_temp = obj["jet2_temp"]
     compartment_temp = obj["compartment_temp"]
@@ -81,6 +85,7 @@ def on_compass_received(client, userdata, message):
     global kalman
 
     obj = json.loads(message.payload.decode('utf-8'))
+
     mag_compass_reading = obj['compass']
     gyro_z = obj['gyro_z']
     kalman_lp = obj['kalman_lp']
@@ -88,12 +93,13 @@ def on_compass_received(client, userdata, message):
 
 def on_internal_compass_received(client, userdata, message):
     global int_compass_reading
+    
     obj = json.loads(message.payload.decode('utf-8'))
+
     int_compass_reading = obj['heading']
    
 
 def on_gps_received(client, userdata, message):
-    # create global variables for UI
     global time_reading
     global lat_reading
     global lon_reading
@@ -117,6 +123,7 @@ def on_adc_received(client, userdata, message):
     global pack_voltage
 
     obj = json.loads(message.payload.decode('utf-8'))
+
     jet1_current = obj["jet1_amps"]
     jet2_current = obj["jet2_amps"]
     pack_voltage = obj["pack_voltage"]
@@ -126,6 +133,7 @@ def on_vector_received(client, userdata, message):
     global magnitude
 
     obj = json.loads(message.payload.decode('utf-8'))
+
     vector = obj["heading"]
     magnitude = obj["magnitude"]
 
@@ -136,7 +144,6 @@ def on_vector_received(client, userdata, message):
 # ==================
 if __name__ == '__main__':
 
-
     try:
         default_subscriptions = {
             "/status/compass": on_compass_received,
@@ -144,15 +151,16 @@ if __name__ == '__main__':
             "/status/adc" : on_adc_received,
             "/status/internal_compass" : on_internal_compass_received,
             "/status/temp" : on_temp_received,
+            "/status/vector" : on_vector_received,
             "/command/logging" : on_log_received,
             "/command/stop_logging" : on_stop_log,
-            "/status/vector" : on_vector_received
         }
+
+        # Start Subscriptions
         subber = Subscriber(client_id="telemetry_live", broker_ip="192.168.1.170", default_subscriptions=default_subscriptions)
         thread = Thread(target=subber.listen)
         thread.start()
         
-
         while True:
             message = {
                 'time' : time_reading,
@@ -177,15 +185,12 @@ if __name__ == '__main__':
             }
             
             if logging_stopped == "True":
-                
                 print("not logging")
-
             else: 
-                print("logging to" + _LOG_BASE)
-                with open(f"../logs/{_LOG_BASE}.txt", "a") as outfile:
+                print(f'Logging to {_LOG_BASE}.txt')
+                with open(f"../logs/{_LOG_BASE}.txt", "a+") as outfile:
                     json.dump(message, outfile)
                     outfile.write("\n")
-                    
                     
             time.sleep(0.1)
 

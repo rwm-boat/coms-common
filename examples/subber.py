@@ -29,14 +29,14 @@ if __name__ == '__main__':
     }
      
     subber = Subscriber(client_id="test_subber", broker_ip="127.0.0.1", default_subscriptions=default_subscriptions)
-    # 
+    
     # subber.subscribe("/status/time", on_time_received)
     # subber.subscribe("/status/gps", on_gps_received)
-    #subber.subscribe_many(default_subscriptions)
+    # subber.subscribe_many(default_subscriptions)
 
     subber.listen()
 
     while(True):
         # Wait for the broker to retur the message
-        time.sleep(.001)
+        time.sleep(1)
 
