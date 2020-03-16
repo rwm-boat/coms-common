@@ -5,6 +5,7 @@
 
 # MQTT_CLIENT package
 /mqtt_client/__pycache__
+/hypervisor/__pycache__
 mqtt_client.egg-info
 
 # Log Files
