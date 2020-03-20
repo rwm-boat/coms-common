@@ -10,3 +10,7 @@ mqtt_client.egg-info
 
 # Log Files
 /logs/*.txt
+
+# Build Files
+/build
+/dist
