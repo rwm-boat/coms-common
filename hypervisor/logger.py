@@ -1,6 +1,5 @@
 import sys
 import os
-import time
 import json
 from datetime import datetime
 from threading import Thread
@@ -61,20 +60,16 @@ class Logger :
         # thread.start()
 
         
-    def run(self):
+    def run_once(self):
         global running
         global log_location
         global log_filename
 
-        # Loop Forever to log all the data
-        while True:
-            # Handle all incoming and outgoing MQTT trafic (for up to one second)
-            # self.subber.client.loop(timeout=0.1)
-            if running:
-                with open(f"{log_location}/{log_filename}.txt", "a+") as outfile:
-                    json.dump(curr_state, outfile)
-                    outfile.write("\n")
-            time.sleep(0.1) 
+        if running:
+            with open(f"{log_location}/{log_filename}.txt", "a+") as outfile:
+                json.dump(curr_state, outfile)
+                outfile.write("\n")
+
 
 def on_log_name(client, userdata, message):
     global log_filename
