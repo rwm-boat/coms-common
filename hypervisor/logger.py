@@ -29,7 +29,7 @@ curr_state = {
 }
 
 # Save the Log Folder location
-log_location = '../logs'
+log_location = '/home/pi/coms-common/logs'
 # Save the Initial Log file Name 
 log_filename = 'log'
 # Set the logger to wait by default
