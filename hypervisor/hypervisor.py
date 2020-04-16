@@ -58,7 +58,6 @@ drop_privileges(uid_name='pi', gid_name='pi')
 # CREATE A BOAT LOGGER
 boat_log = Logger()
 
-
 # Do the rest of your service after this point, you'll be running as 'pi'
 while True:
     # This is where the main work of your service should go

@@ -29,6 +29,7 @@ curr_state = {
 }
 
 # Save the Log Folder location
+# log_location = '../logs'
 log_location = '/home/pi/coms-common/logs'
 # Save the Initial Log file Name 
 log_filename = 'log'
@@ -54,10 +55,11 @@ class Logger :
         }
 
         # Create a Subcriber to get all the date
-        self.subber = Subscriber(client_id="loggertest", broker_ip="192.168.1.170", default_subscriptions=self.default_subscriptions)
+        self.subber = Subscriber(client_id="logger", broker_ip="192.168.1.170", default_subscriptions=self.default_subscriptions)
         self.subber.client.loop_start()
-        # thread = Thread(target=self.subber.listen)
-        # thread.start()
+        
+        print(f'Created a Logger @ {log_location}/{log_filename} Running : {running}')
+
 
         
     def run_once(self):
