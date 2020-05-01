@@ -1,7 +1,7 @@
 from mqtt_client.publisher import Publisher
 import json
 
-pubber = Publisher(client_id="log_command", broker_ip="192.168.1.170")
+pubber = Publisher(client_id="log_command", broker_ip="192.168.8.170")
 
 while True:
     # Wait for the broker to retur the message

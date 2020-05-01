@@ -157,7 +157,7 @@ if __name__ == '__main__':
         }
 
         # Start Subscriptions
-        subber = Subscriber(client_id="telemetry_live", broker_ip="192.168.1.170", default_subscriptions=default_subscriptions)
+        subber = Subscriber(client_id="telemetry_live", broker_ip="192.168.8.170", default_subscriptions=default_subscriptions)
         thread = Thread(target=subber.listen)
         thread.start()
         

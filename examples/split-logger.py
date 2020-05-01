@@ -64,7 +64,7 @@ if __name__ == "__main__":
     }
     subber = Subscriber(
         client_id="logger_client",
-        broker_ip="192.168.1.170",
+        broker_ip="192.168.8.170",
         default_subscriptions=default_subscriptions,
     )
 

@@ -55,7 +55,7 @@ class Logger :
         }
 
         # Create a Subcriber to get all the date
-        self.subber = Subscriber(client_id="logger", broker_ip="192.168.1.170", default_subscriptions=self.default_subscriptions)
+        self.subber = Subscriber(client_id="logger", broker_ip="192.168.8.170", default_subscriptions=self.default_subscriptions)
         self.subber.client.loop_start()
         
         print(f'Created a Logger @ {log_location}/{log_filename} Running : {running}')

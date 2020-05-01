@@ -7,7 +7,7 @@ import time
 # ==================
 if __name__ == '__main__':
 
-    pubber = Publisher(client_id="time_pubber",  broker_ip="192.168.1.170")
+    pubber = Publisher(client_id="time_pubber",  broker_ip="192.168.8.170")
 
     while(True):
         milli = time.time() * 1000
