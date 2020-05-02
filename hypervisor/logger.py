@@ -14,13 +14,15 @@ curr_state = {
     'lon_reading': 0,
     'speed_reading' :0,
     'gps_heading_reading': 0,
-    'jet1_temp': 0,
-    'jet2_temp': 0,
-    'compartment_temp': 0,
+    'jet1_motor_temp': 0,
+    'jet2_motor_temp': 0,
+    'jet1_esc_temp': 0,
+    'jet2_esc_temp': 0,
     'gps_distance': 0,
     'jet1_current': 0, #starboard
     'jet2_current': 0, #port
     'pack_voltage': 0,
+    'MPA_temp': 0,
     'vector': 0,
     'magnitude': 0,
     'gyro_z': 0,
@@ -110,9 +112,10 @@ def on_temp_received(client, userdata, message):
 
     obj = json.loads(message.payload.decode('utf-8'))
 
-    curr_state['jet1_temp'] = obj["jet1_temp"]
-    curr_state['jet2_temp'] = obj["jet2_temp"]
-    curr_state['compartment_temp'] = obj["compartment_temp"]
+    curr_state['jet1_motor_temp'] = obj["jet1_motor_temp"]
+    curr_state['jet2_motor_temp'] = obj["jet2_motor_temp"]
+    curr_state['jet1_esc_temp'] = obj["jet1_esc_temp"]
+    curr_state['jet2_esc_temp'] = obj["jet2_esc_temp"]
 
 def on_compass_received(client, userdata, message):
     global curr_state
@@ -151,6 +154,7 @@ def on_adc_received(client, userdata, message):
     curr_state['jet1_current'] = obj["jet1_amps"]
     curr_state['jet2_current'] = obj["jet2_amps"]
     curr_state['pack_voltage'] = obj["pack_voltage"]
+    curr_state['MPA_temp'] = obj["MPA_temp"]
 
 def on_vector_received(client, userdata, message):
     global curr_state
