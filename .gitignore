@@ -14,3 +14,4 @@ mqtt_client.egg-info
 # Build Files
 /build
 /dist
+*Icon*

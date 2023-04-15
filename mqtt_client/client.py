@@ -75,7 +75,7 @@ class MQTTClient(mqtt.Client):
         print(f"message retain flag= {message.retain}")
         
     
-    def _on_publish_ret(self, userdata, mid):
+    def _on_publish_ret(self, client, userdata, mid):
         print(f"Message Published with mid : {str(mid)}")
 
 
